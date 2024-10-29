@@ -5,7 +5,7 @@ import {
 import Bar from "../components/BarChart.jsx"
 import { io } from 'socket.io-client'
 
-function Home() {
+function HomePage() {
     const socket = useMemo(() =>
         io('http://localhost:5000'));
 
@@ -34,4 +34,4 @@ function Home() {
     )
 }
 
-export default Home
+export default HomePage

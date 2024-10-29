@@ -5,7 +5,28 @@ import { AuthContext } from "./authContext";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
+import HomePage from "./pages/Home";
+
+import DisplayCategoryTable from "./pages/category/Category";
+import CreateCategory from "./pages/category/CreateCategory";
+import ViewCategory from "./pages/category/ViewCategory";
+import EditCategory from "./pages/category/EditCategory";
+
+import DisplayMenuTable from "./pages/menu/Menu";
+import CreateMenu from "./pages/menu/CreateMenu";
+import ViewMenu from "./pages/menu/ViewMenu";
+import EditMenu from "./pages/menu/EditMenu";
+
+import DisplayRestaurantTable from "./pages/restaurants/Restaurants";
+import CreateRestaurant from "./pages/restaurants/CreateRestaurant";
+import ViewRestaurant from "./pages/restaurants/ViewRestaurant";
+import EditRestaurant from "./pages/restaurants/EditRestaurant";
+
+import OrderHistory from "./pages/order/OrderHistory";
+import ViewOrder from "./pages/order/ViewOrder";
+
+import Users from "./pages/user/Users";
+import ViewUser from "./pages/user/ViewUser";
 
 function App() {
     const { user } = useContext(AuthContext);
@@ -22,30 +43,33 @@ function App() {
         <BrowserRouter>
             <Routes>
 
-                <Route path="/GiftRequests"            element={<ProtectedRoute><DisplayAllGiftRequestsTabular /></ProtectedRoute>} />
-                <Route path="/CreateGiftRequest"        element={<ProtectedRoute><CreateGiftRequest /></ProtectedRoute>} />
-                <Route path="/TrackGiftRequest/:id"       element={<ProtectedRoute><TrackGiftRequest /></ProtectedRoute>} />
-                <Route path="/ViewGiftRequest/:id"       element={<ProtectedRoute><ViewGiftRequest /></ProtectedRoute>} />
+                <Route path="/Category"            element={<ProtectedRoute><DisplayAllCategorysTabular /></ProtectedRoute>} />
+                <Route path="/CreateCategory"        element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
+                <Route path="/TrackCategory/:id"       element={<ProtectedRoute><TrackCategory /></ProtectedRoute>} />
+                <Route path="/ViewCategory/:id"       element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
 
-                <Route path="/Gifts"            element={<ProtectedRoute><DisplayAllGiftsTabular /></ProtectedRoute>} />
-                <Route path="/CreateGift"        element={<ProtectedRoute><CreateGift /></ProtectedRoute>} />
-                <Route path="/EditGift/:id"       element={<ProtectedRoute><EditGift /></ProtectedRoute>} />
-                <Route path="/ViewGift/:id"       element={<ProtectedRoute><ViewGift /></ProtectedRoute>} />
+                <Route path="/Category"            element={<ProtectedRoute><DisplayCategoryTable /></ProtectedRoute>} />
+                <Route path="/CreateCategory"        element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
+                <Route path="/EditCategory/:id"       element={<ProtectedRoute><EditCategory /></ProtectedRoute>} />
+                <Route path="/ViewCategory/:id"       element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
+                
+                <Route path="/Menu"            element={<ProtectedRoute><DisplayMenuTable /></ProtectedRoute>} />
+                <Route path="/CreateMenu"        element={<ProtectedRoute><CreateMenu /></ProtectedRoute>} />
+                <Route path="/EditMenu/:id"       element={<ProtectedRoute><EditMenu /></ProtectedRoute>} />
+                <Route path="/ViewMenu/:id"       element={<ProtectedRoute><ViewMenu /></ProtectedRoute>} />
 
-                <Route path="/Interests"            element={<ProtectedRoute><DisplayAllInterestsTabular /></ProtectedRoute>} />
-                <Route path="/CreateInterest"        element={<ProtectedRoute><CreateInterest /></ProtectedRoute>} />
-                <Route path="/EditInterest/:id"       element={<ProtectedRoute><EditInterest /></ProtectedRoute>} />
-                <Route path="/ViewInterest/:id"       element={<ProtectedRoute><ViewInterest /></ProtectedRoute>} />
-                <Route path="/EditInterestsGifts/:id"       element={<ProtectedRoute><EditInterestsGifts /></ProtectedRoute>} />
+                <Route path="/Restaurant"            element={<ProtectedRoute><DisplayRestaurantTable /></ProtectedRoute>} />
+                <Route path="/CreateRestaurant"        element={<ProtectedRoute><CreateRestaurant /></ProtectedRoute>} />
+                <Route path="/EditRestaurant/:id"       element={<ProtectedRoute><EditRestaurant /></ProtectedRoute>} />
+                <Route path="/ViewRestaurant/:id"       element={<ProtectedRoute><ViewRestaurant /></ProtectedRoute>} />
 
-                <Route path="/Persons"            element={<ProtectedRoute><DisplayAllPersonsTabular /></ProtectedRoute>} />
-                <Route path="/CreatePerson"        element={<ProtectedRoute><CreatePerson /></ProtectedRoute>} />
-                <Route path="/EditPerson/:id"       element={<ProtectedRoute><EditPerson /></ProtectedRoute>} />
-                <Route path="/ViewPerson/:id"       element={<ProtectedRoute><ViewPerson /></ProtectedRoute>} />
-                <Route path="/EditPersonsInterests/:id"        element={<ProtectedRoute><EditPersonsInterests /></ProtectedRoute>} />
-                <Route path="/EditGifts/:id"       element={<ProtectedRoute><EditGifts /></ProtectedRoute>} />
+                <Route path="/OrderHistory"            element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+                <Route path="/ViewOrder/:id"       element={<ProtectedRoute><ViewOrder /></ProtectedRoute>} />
 
-                <Route path="/"                 element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
+                <Route path="/Users"            element={<ProtectedRoute><Users /></ProtectedRoute>} />
+                <Route path="/ViewUser/:id"       element={<ProtectedRoute><ViewUser /></ProtectedRoute>} />
+
+                <Route path="/"                 element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
                 <Route path="/login"            element={<Login />} />
                 <Route path="/register"         element={<Register />} />
 

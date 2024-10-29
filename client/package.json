@@ -12,12 +12,15 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/x-charts": "^7.22.0",
     "axios": "^1.7.7",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
+    "react-tooltip": "^5.28.0",
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {

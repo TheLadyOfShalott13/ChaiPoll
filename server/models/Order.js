@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/conn.js");
-const Restaurant = require('./Restaurant');
-const User = require('./User');
+import { DataTypes } from "sequelize";
+import sequelize from "../config/conn.js";
+import Restaurant from "./Restaurant.js";
+import User from "./User.js";
 
 const Order = sequelize.define("Order",{
     id:             { type: DataTypes.INTEGER,      autoIncrement: true,    primaryKey: true },
@@ -13,4 +13,4 @@ const Order = sequelize.define("Order",{
     status:         { type: DataTypes.ENUM,         allowNull: false,       values: ['pending', 'all-paid-up'], defaultValue: 'pending' }
 });
 
-module.exports = Order;
+export default Order;

@@ -14,7 +14,7 @@ export const createRestaurant = async (req, res, next) => {
 
 export const deleteRestaurant = async (req, res, next) => {
     try {
-        await Restaurant.findByIdAndDelete(req.params.id);
+        await Restaurant.destroy( { where: { id: req.params.id } });
         res.status(200).json("The selected restaurant has been deleted");
     } catch (err) {
         next(err);
@@ -34,7 +34,7 @@ export const getOneRestaurant = async (req, res, next) => {
     const restaurantId = req.params.id;
 
     try {
-        const restaurant = await Restaurant.find({id:restaurantId});
+        const restaurant = await Restaurant.findAll({ where: { id: restaurantId } });
         res.status(200).json(restaurant);
     } catch (err) {
         next(err)
@@ -43,10 +43,9 @@ export const getOneRestaurant = async (req, res, next) => {
 
 export const updateRestaurant = async (req, res, next) => {
     try {
-        const restaurant = await Restaurant.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body },
-            { new: true }
+        const restaurant = await Restaurant.update(
+            req.body.name,
+            {where: {id: req.params.id}}
         );
         res.status(200).json(restaurant);
     } catch (err) {

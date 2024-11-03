@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/conn.js");
+import { DataTypes } from "sequelize";
+import sequelize from "../config/conn.js";
 
 const User = sequelize.define("User",{
     id:         { type: DataTypes.INTEGER,  autoIncrement: true,    primaryKey: true },
@@ -8,7 +8,7 @@ const User = sequelize.define("User",{
     password:   { type: DataTypes.STRING,   allowNull: false },
     email:      { type: DataTypes.STRING,   allowNull: false },
     phone:      { type: DataTypes.INTEGER,  allowNull: false },
-    department: { type: DataTypes.ENUM,     allowNull: false }
+    department: { type: DataTypes.ENUM,     allowNull: false,       values: ['Tech', 'Marketing', 'Onboarding', 'Finance', "Growth", "Call Center"] }
 });
 
-module.exports = User;
+export default User;

@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/conn.js");
-const Category = require('./Category');
-const Restaurant = require('./Restaurant');
+import { DataTypes } from "sequelize";
+import sequelize from "../config/conn.js";
+import Category from "./Category.js";
+import Restaurant from "./Restaurant.js";
 
 const Menu = sequelize.define("Menu",{
     id:         { type: DataTypes.INTEGER,      autoIncrement: true,    primaryKey: true },
@@ -11,4 +11,4 @@ const Menu = sequelize.define("Menu",{
     restaurant: { type: DataTypes.INTEGER,      allowNull: false,       references: { model: Restaurant,    key: 'id' } }
 });
 
-module.exports = Menu;
+export default Menu;

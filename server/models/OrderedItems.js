@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/conn.js");
-const Order = require('./Order');
-const User = require('./User');
+import { DataTypes } from "sequelize";
+import sequelize from "../config/conn.js";
+import Order from "./Order.js";
+import User from "./User.js";
 
 const OrderedItems = sequelize.define("OrderedItems",{
     id:             { type: DataTypes.INTEGER,      autoIncrement: true,    primaryKey: true },
@@ -12,4 +12,4 @@ const OrderedItems = sequelize.define("OrderedItems",{
     paid_on:        { type: DataTypes.DATE,         allowNull: true }
 });
 
-module.exports = OrderedItems;
+export default OrderedItems;

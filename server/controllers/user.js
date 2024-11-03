@@ -15,7 +15,7 @@ export const getAllUsers = async (req, res) => {
 export const getOneUser = async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await User.findOne({ id: userId});
+        const user = await User.findAll({ where: { id: userId } });
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -26,7 +26,7 @@ export const register = async (req, res, next) => {
     try {
 
         //check for already exist
-        const em = await User.findOne({ email: req.body.email });
+        const em = await User.findAll({ where: { email: req.body.email } });
         if (em)
             return res.status(409).send({
                 message: "User with given email already exists"
@@ -49,9 +49,7 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
-        const user = await User.findOne({
-            username: req.body.username
-        });
+        const user = await User.findAll({ where: { username: req.body.username } });
         if (!user) return next(
             createError(404, "User not found!"));
 

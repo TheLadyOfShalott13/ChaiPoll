@@ -7,7 +7,7 @@ import { io } from 'socket.io-client'
 
 function HomePage() {
     const socket = useMemo(() =>
-        io('http://localhost:5000'));
+        io('http://localhost:5000')) ;
 
     useEffect(() => {
 

@@ -8,7 +8,7 @@ import { AuthContext } from "../authContext";
 
 function Login() {
     const [credentials, setCredentials] = useState({
-        username: undefined,
+        email: undefined,
         password: undefined,
     });
 
@@ -55,8 +55,8 @@ function Login() {
                         <div className="txt_field">
                             <input
                                 type="text"
-                                placeholder="Username"
-                                id="username"
+                                placeholder="Email"
+                                id="email"
                                 onChange={handleChange}
                                 className="lInput"/>
                         </div>

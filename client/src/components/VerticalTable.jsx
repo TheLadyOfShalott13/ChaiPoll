@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 
 const VerticalTable = ({ attributes, data, option }) => {
 
-    const OptComponent = React.lazy(() => import('../options/'+option+'Options.jsx'));
+    const OptComponent = React.lazy(() => import('./options/'+option+'Options.jsx'));
     const obj = data[0]
     return (
         <Table striped bordered hover>

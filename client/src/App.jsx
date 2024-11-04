@@ -43,11 +43,6 @@ function App() {
         <BrowserRouter>
             <Routes>
 
-                <Route path="/Category"            element={<ProtectedRoute><DisplayAllCategorysTabular /></ProtectedRoute>} />
-                <Route path="/CreateCategory"        element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
-                <Route path="/TrackCategory/:id"       element={<ProtectedRoute><TrackCategory /></ProtectedRoute>} />
-                <Route path="/ViewCategory/:id"       element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
-
                 <Route path="/Category"            element={<ProtectedRoute><DisplayCategoryTable /></ProtectedRoute>} />
                 <Route path="/CreateCategory"        element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
                 <Route path="/EditCategory/:id"       element={<ProtectedRoute><EditCategory /></ProtectedRoute>} />

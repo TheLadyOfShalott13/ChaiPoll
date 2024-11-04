@@ -51,7 +51,7 @@ const Navbar = () => {
                                         style={{ cursor: "pointer" }}>
                                         <p>Logout</p>
                                     </li>
-                                    <li id="usernamename"><p>{user.username}</p></li>
+                                    <li id="usernamename"><p>{user.name}</p></li>
                                 </Link>
                             </>
                         ) :

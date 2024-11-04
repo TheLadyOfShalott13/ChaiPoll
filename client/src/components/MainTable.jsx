@@ -11,7 +11,7 @@ const MainTable = ({ tbody, thead, options, object, attribute }) => {
     table.thead = thead.thead;
     table.tbody = tbody.tbody;
     const optName = options?.options_name;
-    const OptComponent = React.lazy(() => import('../options/'+optName+'Options.jsx'));
+    const OptComponent = React.lazy(() => import('./options/'+optName+'Options.jsx'));
 
     useEffect(()=> {
         if (typeof object === 'string' && object.trim()!=='') { //only set states when object parameter has been passed

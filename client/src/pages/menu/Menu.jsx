@@ -1,5 +1,4 @@
 import React from 'react'
-import useFetch from '../../useFetch'
 import { Link } from "react-router-dom";
 import MainTable from '../../components/MainTable'
 import Navbar from '../../components/Navbar'
@@ -10,7 +9,8 @@ const DisplayMenuTable = ({ type }) => {
 
     const thead = ['id','name','options'];
     const options_name = 'menu';
-    const tbody  = useFetch(`menu/list`)?.data
+    const tbody  = []
+    //const tbody  = useFetch(`menu/list`)?.data
 
     return (
         <div>

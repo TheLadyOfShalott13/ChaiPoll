@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const ViewUser = ({params}) => {
 
     const {id} = useParams();
-    const attributes = ['id','name','username','password','email','phone','department'];
+    const attributes = ['id','name','email','password','phone','department'];
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
     const option_name = 'user';

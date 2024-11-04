@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.post("/login", login);
-router.delete("/register", register);
+router.post("/register", register);
 router.get("/get/:id", getOneUser);
 router.get("/list", getAllUsers);
 

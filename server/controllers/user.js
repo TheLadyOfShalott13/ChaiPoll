@@ -27,7 +27,7 @@ export const register = async (req, res, next) => {
 
         //check for already exist
         const em = await User.findAll({ where: { email: req.body.email } });
-        if (em)
+        if (em.length===1)
             return res.status(409).send({
                 message: "User with given email already exists"
             })
@@ -40,7 +40,7 @@ export const register = async (req, res, next) => {
         });
 
         await newUser.save();
-        res.status(200).send("User has been created.");
+        res.status(200).send(req.body);
     } catch (err) {
         next(err);
     }
@@ -49,9 +49,10 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
-        const user = await User.findAll({ where: { username: req.body.username } });
-        if (!user) return next(
+        let user = await User.findAll({ where: { email: req.body.email } });
+        if (user.length===0) return next(
             createError(404, "User not found!"));
+        else user = user[0];
 
         const isPasswordCorrect = await bcrypt.compare(
             req.body.password,
@@ -59,14 +60,14 @@ export const login = async (req, res, next) => {
         );
         if (!isPasswordCorrect)
             return next(createError(
-                400, "Wrong password or username!"));
+                400, "Wrong password or email!"));
 
         const token = jwt.sign(
-            { id: user._id, isAdmin: user.isAdmin },
+            { id: user.id, isAdmin: user.isAdmin },
             process.env.JWT
         );
 
-        const { password, isAdmin, ...otherDetails } = user._doc;
+        const { password, isAdmin, ...otherDetails } = user;
         res
             .cookie("access_token", token, {
                 httpOnly: true,

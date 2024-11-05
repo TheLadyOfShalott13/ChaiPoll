@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/tables.css"
+import "../../styles/tables.css"
 import { Link } from "react-router-dom";
 
 const Options = ({ id }) => {

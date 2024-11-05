@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/tables.css"
+import "../../styles/tables.css"
 import axios from 'axios';
 import { faTrash, faEdit, faEye } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

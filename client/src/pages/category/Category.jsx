@@ -1,16 +1,39 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from "react-router-dom";
 import MainTable from '../../components/MainTable'
 import Navbar from '../../components/Navbar'
 import "../../styles/tables.css"
 import {Button} from "react-bootstrap";
+import axios from "axios";
 
 const DisplayCategoryTable = ({ type }) => {
 
     const thead = ['id','name','options'];
     const options_name = 'category';
-    const tbody  = []
-    //const tbody  = useFetch(`category/list`)?.data
+    const [tbody, setTbody]  = useState([]);
+    const [loaded, setLoadStatus]  = useState(false);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+
+    useEffect(() => {
+        async function load_data(){
+            axios.get(`${url_prefix}/api/category/list`).then((response) => {
+                setTbody(response.data);
+                setLoadStatus(true)
+            }).catch((err) => { //error state
+                console.log("ERROR FROM GET API: ")
+                console.log(err);
+            });
+        }
+
+        if (!loaded)
+            load_data().then(() => console.log("loading COMPLETED"));
+    }, [tbody]);
+
+    //==========For debugging purposes==============//
+    //console.log("SHOWING TBODY================");
+    //console.log(tbody);
+    //console.log("DISPLAYING STATUS");
+    //console.log(loaded);
 
     return (
         <div>

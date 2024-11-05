@@ -12,6 +12,7 @@ const ViewCategory = ({params}) => {
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
     const option_name = 'category';
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
 
     useEffect(() => {
         const loadData = async () => {
@@ -21,17 +22,18 @@ const ViewCategory = ({params}) => {
 
             // Await make wait until that
             // promise settles and return its result
-            axios.get(`http://localhost:3000/category/get/${id}`).then((response) => {
+            axios.get(`${url_prefix}/api/category/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
+                console.log(err);
                 setResponseStatus(true);		//error state
             });
             console.log('Completed');
         };
 
         // Call the function
-        loadData();
+        if (!responseRecieved) loadData();
     }, []);
 
     return (

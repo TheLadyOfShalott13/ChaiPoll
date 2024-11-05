@@ -8,9 +8,10 @@ const EditCategory = ( {params} ) => {
 
     const {id} = useParams();
     const [info, setInfo] = useState({});
-    const [file, setFile] = useState(null);
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
 
     useEffect(() => {
         const loadData = async () => {
@@ -20,7 +21,7 @@ const EditCategory = ( {params} ) => {
 
             // Await make wait until that
             // promise settles and return its result
-            axios.get(`http://localhost:3000/category/get/${id}`).then((response) => {
+            axios.get(`${url_prefix}/api/category/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
@@ -43,21 +44,19 @@ const EditCategory = ( {params} ) => {
 
     const handleClick = async(e) => {
         e.preventDefault();
-        const Fdata = new FormData();
-        Object.keys(info).forEach((key)=> {
-            Fdata.append(key,info[key]);
-            //console.log('DATA VALUE OF '+ key + ': ' + data.get(key))
-        });
-        if (file){
-            Fdata.append("img",file);
-            Fdata.append("imgName",file.name);
-        }
         try {
-            await fetch(`http://localhost:7700/api/category/update/${id}`, {
-                method: "PUT",
-                body: Fdata,
+            axios.put(
+                    `${url_prefix}/api/category/update/${id}`,
+                    info,
+                    { headers: { "Content-Type": "application/json" } }
+                ).then((response) => {
+                    //console.log("checking response");
+                    //console.log(response);
+            }).catch((err) => {
+                console.log(err);
+                setResponseStatus(true);		//error state
             });
-            window.location.assign('http://localhost:3000/Category');
+            window.location.assign(`${url_redirect_prefix}/Category`);
         } catch (err) {
             console.log(err);
         }
@@ -82,17 +81,6 @@ const EditCategory = ( {params} ) => {
                                         id="name"
                                         placeholder="Enter Name"
                                     />
-                                </div>
-
-                                <div className="input">
-                                    <label htmlFor="img">Image</label>
-                                    <input
-                                        type="file"
-                                        accept=".png,.jpeg,.jpg"
-                                        onChange={(e) => setFile(e.target.files[0])}
-                                        id="img"
-                                    />
-                                    <span className="imageName"><b>Current File:</b> {(data[0].imgName)?data[0].imgName:"No file selected"}</span>
                                 </div>
 
                                 <button className="button"

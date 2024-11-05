@@ -25,9 +25,10 @@ table td, th {
     padding: 10px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
-
-table tr:hover {background-color: #ddd;}
+table tr:hover {
+    background-color: #131313;
+    color: white;
+}
 
 table th {
     padding-top: 12px;
@@ -60,7 +61,7 @@ table th {
 
 .tableOptions {
     padding-left: 5px;
-    color: black;
+    color: white;
 }
 
 .tableOptions :hover {

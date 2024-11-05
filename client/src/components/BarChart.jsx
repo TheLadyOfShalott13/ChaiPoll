@@ -49,7 +49,7 @@ export default function Bar({ socket }) {
             </div>
 
             <h3><u>What do you want to order?</u></h3>
-            <div className='btn'>
+            <div className='votingOpt'>
                 <button className='myButton' onClick={() => updateVote(0)}>
                     Django
                 </button>

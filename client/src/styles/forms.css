@@ -8,7 +8,7 @@ html {
 }
 
 .newFormContainer {
-    background-color: lavender;
+    background-color: #131313;
     height: 100%;
 }
 
@@ -83,7 +83,7 @@ html {
     height: 40px;
     margin-top: 20px;
     border: none;
-    background: purple;
+    background: forestgreen;
     border-radius: 25px;
     font-size: 18px;
     color: white;
@@ -103,7 +103,7 @@ html {
     border: 0;
     border-bottom: 1px solid plum;
     background: white;
-    color: purple;
+    color: forestgreen;
 }
 
 .newFormContainer .column .input .type {
@@ -111,7 +111,7 @@ html {
     height: 35px;
     background: white;
     border-radius: 5px;
-    color: violet;
+    color: darkseagreen;
     cursor: pointer;
     font-weight: bold;
 }

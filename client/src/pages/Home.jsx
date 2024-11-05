@@ -1,9 +1,11 @@
-import {
+import React, {
     useEffect,
     useMemo,
 } from "react"
+import '../styles/index.css';
 import Bar from "../components/BarChart.jsx"
 import { io } from 'socket.io-client'
+import Navbar from "../components/Navbar.jsx";
 
 function HomePage() {
     const socket = useMemo(() =>
@@ -28,8 +30,11 @@ function HomePage() {
 
     return (
         <>
-            <img src="./assets/chailogo.png"/><h1>Real-Time Chai Polling App</h1>
-            <Bar socket={socket} />
+            <Navbar />
+            <div className="bodyContainer">
+                <img src="./assets/chailogo.png"/><h1>Real-Time Chai Polling App</h1>
+                <Bar socket={socket}/>
+            </div>
         </>
     )
 }

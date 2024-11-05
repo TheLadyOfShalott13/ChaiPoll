@@ -65,7 +65,7 @@ const MainTable = ({ tbody, thead, options, object, attribute }) => {
     if (table.tbody.length > 0) {
 
         return (
-            <Table striped bordered hover>
+            <Table bordered hover>
                 <thead>
                 <tr>
                     {table.thead.map( function(ele, i) {
@@ -79,13 +79,13 @@ const MainTable = ({ tbody, thead, options, object, attribute }) => {
 
                         table.thead.map( function(index, k) {
                             if (index==='options') {
-                                ele[index] = <Suspense fallback={<div>Loading...</div>}><OptComponent id={ele._id} /></Suspense>
+                                ele[index] = <Suspense fallback={<div>Loading...</div>}><OptComponent id={ele.id} /></Suspense>
                             }
                             if (index==='checkbox') {
                                 ele[index] = <input
                                     type="checkbox"
-                                    value={ele['_id']}
-                                    checked={selected.includes(ele['_id'])?"checked":""}
+                                    value={ele['id']}
+                                    checked={selected.includes(ele['id'])?"checked":""}
                                     onChange={selectCheckbox}
                                 />
                             }

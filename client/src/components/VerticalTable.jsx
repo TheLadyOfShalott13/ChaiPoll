@@ -17,7 +17,7 @@ const VerticalTable = ({ attributes, data, option }) => {
             {attributes.map( function(ele,i) {
                 return (<tr key={i}>
                     <td>{ele}</td>
-                    <td>{ele==='options'? <Suspense fallback={<div>Loading...</div>}><OptComponent id={obj._id} /></Suspense> : obj[ele]}</td>
+                    <td>{ele==='options'? <Suspense fallback={<div>Loading...</div>}><OptComponent id={obj.id} /></Suspense> : obj[ele]}</td>
                 </tr>)
             } )}
             </tbody>

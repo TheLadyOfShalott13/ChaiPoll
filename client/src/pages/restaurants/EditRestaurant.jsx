@@ -8,9 +8,11 @@ const EditRestaurant = ( {params} ) => {
 
     const {id} = useParams();
     const [info, setInfo] = useState({});
-    const [file, setFile] = useState(null);
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+
 
     useEffect(() => {
         const loadData = async () => {
@@ -20,10 +22,11 @@ const EditRestaurant = ( {params} ) => {
 
             // Await make wait until that
             // promise settles and return its result
-            axios.get(`http://localhost:3000/restaurant/get/${id}`).then((response) => {
+            axios.get(`${url_prefix}/api/restaurants/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
+                console.log(err);
                 setResponseStatus(true);		//error state
             });
             console.log('Completed');
@@ -43,21 +46,21 @@ const EditRestaurant = ( {params} ) => {
 
     const handleClick = async(e) => {
         e.preventDefault();
-        const Fdata = new FormData();
-        Object.keys(info).forEach((key)=> {
-            Fdata.append(key,info[key]);
-            //console.log('DATA VALUE OF '+ key + ': ' + data.get(key))
-        });
-        if (file){
-            Fdata.append("img",file);
-            Fdata.append("imgName",file.name);
-        }
         try {
-            await fetch(`http://localhost:7700/api/restaurant/update/${id}`, {
-                method: "PUT",
-                body: Fdata,
+            axios.put(
+                `${url_prefix}/api/restaurants/update/${id}`,
+                info,
+                { headers: { "Content-Type": "application/json" } }
+            ).then((response) => {
+                //console.log("checking response");
+                //console.log(response);
+                //console.log("checking request");
+                //console.log(info);
+            }).catch((err) => {
+                console.log(err);
+                setResponseStatus(true);		//error state
             });
-            window.location.assign('http://localhost:3000/Restaurant');
+            window.location.assign(`${url_redirect_prefix}/Restaurant`);
         } catch (err) {
             console.log(err);
         }
@@ -79,6 +82,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="text"
                                         id="name"
+                                        value={info.name? info.name : data[0].name}
                                         placeholder="Enter Name"
                                     />
                                 </div>
@@ -89,6 +93,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="text"
                                         id="address"
+                                        value={info.address? info.address : data[0].address}
                                         placeholder="Enter Address"
                                     />
                                 </div>
@@ -99,6 +104,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="number"
                                         id="del_mins"
+                                        value={info.del_mins? info.del_mins : data[0].del_mins}
                                         placeholder="Enter Delivery Time (in mins)"
                                     />
                                 </div>
@@ -109,6 +115,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="number"
                                         id="landline"
+                                        value={info.landline? info.landline : data[0].landline}
                                         placeholder="Enter Landline"
                                     />
                                 </div>
@@ -119,6 +126,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="text"
                                         id="whatsapp"
+                                        value={info.whatsapp? info.whatsapp : data[0].whatsapp}
                                         placeholder="Enter whatsapp number"
                                     />
                                 </div>
@@ -129,6 +137,7 @@ const EditRestaurant = ( {params} ) => {
                                         onChange={handleChange}
                                         type="text"
                                         id="opt_mobile"
+                                        value={info.opt_mobile? info.opt_mobile : data[0].opt_mobile}
                                         placeholder="Enter Additional Contact Number"
                                     />
                                 </div>

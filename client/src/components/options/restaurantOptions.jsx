@@ -8,10 +8,12 @@ import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+
     const trashClick = async () => {
         try {
             await axios.delete(
-                `http://localhost:7700/api/restaurant/delete/${id}`,
+                `${url_prefix}/api/restaurants/delete/${id}`,
                 { withCredentials: false })
             window.location.reload();
         }

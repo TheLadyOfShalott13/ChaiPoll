@@ -25,6 +25,7 @@ const EditCategory = ( {params} ) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
+                console.log(err);
                 setResponseStatus(true);		//error state
             });
             console.log('Completed');

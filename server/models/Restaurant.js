@@ -6,9 +6,9 @@ const Restaurant = sequelize.define("Restaurant",{
     name:       { type: DataTypes.STRING,   allowNull: false },
     address:    { type: DataTypes.STRING,   allowNull: false },
     del_mins:   { type: DataTypes.INTEGER,  allowNull: false },
-    landline:   { type: DataTypes.STRING,   allowNull: false },
-    whatsapp:   { type: DataTypes.STRING,   allowNull: false },
-    opt_mobile: { type: DataTypes.STRING,   allowNull: false },
+    landline:   { type: DataTypes.STRING,   allowNull: true },
+    whatsapp:   { type: DataTypes.STRING,   allowNull: true },
+    opt_mobile: { type: DataTypes.STRING,   allowNull: true },
 });
 
 export default Restaurant;

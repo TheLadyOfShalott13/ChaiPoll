@@ -44,8 +44,7 @@ export const getOneRestaurant = async (req, res, next) => {
 export const updateRestaurant = async (req, res, next) => {
     try {
         const restaurant = await Restaurant.update(
-            req.body.name,
-            {where: {id: req.params.id}}
+            req.body, {where: {id: req.params.id}}
         );
         res.status(200).json(restaurant);
     } catch (err) {

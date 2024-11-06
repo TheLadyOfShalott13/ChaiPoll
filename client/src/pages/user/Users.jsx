@@ -1,14 +1,31 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import MainTable from '../../components/MainTable'
 import Navbar from '../../components/Navbar'
 import "../../styles/tables.css"
+import axios from "axios";
 
 const DisplayUserTable = ({ type }) => {
 
-    const thead = ['id','name','department'];
+    const thead = ['id','name','department','options'];
     const options_name = 'user';
-    const tbody  = []
-    //const tbody  = useFetch(`user/list`)?.data
+    const [tbody, setTbody]  = useState([]);
+    const [loaded, setLoadStatus]  = useState(false);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+
+    useEffect(() => {
+        async function load_data(){
+            axios.get(`${url_prefix}/api/users/list`).then((response) => {
+                setTbody(response.data);
+                setLoadStatus(true)
+            }).catch((err) => { //error state
+                console.log("ERROR FROM GET API: ")
+                console.log(err);
+            });
+        }
+
+        if (!loaded)
+            load_data().then(() => console.log("loading COMPLETED"));
+    }, [tbody]);
 
     return (
         <div>

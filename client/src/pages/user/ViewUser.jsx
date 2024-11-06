@@ -8,10 +8,11 @@ import { useParams } from "react-router-dom";
 const ViewUser = ({params}) => {
 
     const {id} = useParams();
-    const attributes = ['id','name','email','password','phone','department'];
+    const attributes = ['id','name','email','phone','department'];
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
     const option_name = 'user';
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
 
     useEffect(() => {
         const loadData = async () => {
@@ -21,17 +22,18 @@ const ViewUser = ({params}) => {
 
             // Await make wait until that
             // promise settles and return its result
-            axios.get(`http://localhost:3000/user/get/${id}`).then((response) => {
+            axios.get(`${url_prefix}/api/users/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
+                console.log(err);
                 setResponseStatus(true);		//error state
             });
             console.log('Completed');
         };
 
         // Call the function
-        loadData();
+        if (!responseRecieved) loadData();
     }, []);
 
     return (

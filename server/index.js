@@ -21,6 +21,7 @@ import ordereditemsRoute from "./routes/ordereditems.js";
 import orderRoute from "./routes/order.js";
 import menuRoute from "./routes/menu.js";
 import categoryRoute from "./routes/category.js";
+import pollRoute from "./routes/poll.js";
 
 
 /**
@@ -60,7 +61,7 @@ app.use("/uploads", express.static("uploads"));
 dotenv.config({path:"./config/.env"});
 
 //insert this as arguments to sync() in order to sync the models correctly { alter: true }
-sequelize.sync().then(() => { console.log('user table created successfully!'); })
+sequelize.sync({ alter: true }).then(() => { console.log('user table created successfully!'); })
                 .catch((error) => { console.error('Unable to create table : ', error); });
 
 app.get('/', (req, res) => { res.send('Hello from Express!') });
@@ -88,5 +89,6 @@ app.use("/api/ordereditems", ordereditemsRoute);
 app.use("/api/order", orderRoute);
 app.use("/api/menu", menuRoute);
 app.use("/api/category", categoryRoute);
+app.use("/api/poll", pollRoute);
 
 server.listen(process.env.APP_PORT, () => { console.log("Listening on port " + process.env.APP_PORT); });

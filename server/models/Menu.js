@@ -11,4 +11,8 @@ const Menu = sequelize.define("Menu",{
     restaurant: { type: DataTypes.INTEGER,      allowNull: false,       references: { model: Restaurant,    key: 'id' } }
 });
 
+//Define Associations
+Menu.belongsTo(Category, { foreignKey: 'category' });
+Menu.belongsTo(Restaurant, { foreignKey: 'restaurant' });
+
 export default Menu;

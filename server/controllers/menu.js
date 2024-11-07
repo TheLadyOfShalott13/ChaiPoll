@@ -1,4 +1,6 @@
 import Menu from "../models/Menu.js";
+import Restaurant from "../models/Restaurant.js";
+import Category from "../models/Category.js";
 
 export const createMenu = async (req, res, next) => {
     const newMenu = new Menu(req.body)
@@ -24,8 +26,21 @@ export const deleteMenu = async (req, res, next) => {
 export const getMenu = async (req, res, next) => {
     const restoId = req.params.id;
     try {
-        const menu = await Menu.findAll({ where: { restaurant: restoId } });
-        res.status(200).json(menu);
+        const menu = await Menu.findAll({
+            where: { restaurant: restoId },
+            include: [
+                { model: Restaurant, attributes: ['name','address'] },
+                { model: Category, attributes: ['name'] },
+            ] });
+
+        const modifiedMenu = menu.map(ele => ({
+            ...ele.get({ plain: true }), // Spread all properties of the original object
+            restaurant_name: ele.Restaurant.name,
+            restaurant_address: ele.Restaurant.address,
+            category_name: ele.Category.name
+        }));
+
+        res.status(200).json(modifiedMenu);
     } catch (err) {
         next(err)
     }

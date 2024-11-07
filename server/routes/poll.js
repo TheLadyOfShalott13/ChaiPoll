@@ -5,6 +5,7 @@ import {
     getAllPoll,
     getOnePoll,
     updatePoll,
+    getRunningPoll
 } from "../controllers/poll.js";
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.post("/create", createPoll);
 router.delete("/delete/:id", deletePoll);
 router.get("/get/:id", getOnePoll);
+router.get("/current", getRunningPoll);
 router.get("/list", getAllPoll);
 router.put("/update/:id", updatePoll);
 

@@ -1,6 +1,6 @@
 import Poll from "../models/Poll.js";
 import Restaurant from "../models/Restaurant.js";
-import {literal} from "sequelize";
+import {literal, Op} from "sequelize";
 
 export const createPoll = async (req, res, next) => {
     const newPoll = new Poll(req.body)
@@ -47,6 +47,20 @@ export const getOnePoll = async (req, res, next) => {
 
     try {
         const poll = await Poll.findAll({ where: { id: pollId } });
+        res.status(200).json(poll);
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const getRunningPoll = async (req, res, next) => {
+
+    try {
+        const poll = await Poll.findAll({
+            where: { pollEnd: { [Op.is]: null } },
+            order: [ ['id', 'DESC'] ],
+            limit: 1
+        });
         res.status(200).json(poll);
     } catch (err) {
         next(err)

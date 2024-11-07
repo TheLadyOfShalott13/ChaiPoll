@@ -28,6 +28,8 @@ import ViewOrder from "./pages/order/ViewOrder";
 import Users from "./pages/user/Users";
 import ViewUser from "./pages/user/ViewUser";
 
+import Poll from "./pages/poll/Poll"
+
 function App() {
     const { user } = useContext(AuthContext);
 
@@ -43,30 +45,32 @@ function App() {
         <BrowserRouter>
             <Routes>
 
-                <Route path="/Category"            element={<ProtectedRoute><DisplayCategoryTable /></ProtectedRoute>} />
-                <Route path="/CreateCategory"        element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
-                <Route path="/EditCategory/:id"       element={<ProtectedRoute><EditCategory /></ProtectedRoute>} />
-                <Route path="/ViewCategory/:id"       element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
+                <Route path="/Category"             element={<ProtectedRoute><DisplayCategoryTable /></ProtectedRoute>} />
+                <Route path="/CreateCategory"       element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
+                <Route path="/EditCategory/:id"     element={<ProtectedRoute><EditCategory /></ProtectedRoute>} />
+                <Route path="/ViewCategory/:id"     element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
                 
-                <Route path="/Menu"            element={<ProtectedRoute><DisplayMenuTable /></ProtectedRoute>} />
-                <Route path="/CreateMenu"        element={<ProtectedRoute><CreateMenu /></ProtectedRoute>} />
-                <Route path="/EditMenu/:id"       element={<ProtectedRoute><EditMenu /></ProtectedRoute>} />
-                <Route path="/ViewMenu/:id"       element={<ProtectedRoute><ViewMenu /></ProtectedRoute>} />
+                <Route path="/Menu"                 element={<ProtectedRoute><DisplayMenuTable /></ProtectedRoute>} />
+                <Route path="/CreateMenu"           element={<ProtectedRoute><CreateMenu /></ProtectedRoute>} />
+                <Route path="/EditMenu/:id"         element={<ProtectedRoute><EditMenu /></ProtectedRoute>} />
+                <Route path="/ViewMenu/:id"         element={<ProtectedRoute><ViewMenu /></ProtectedRoute>} />
 
-                <Route path="/Restaurant"            element={<ProtectedRoute><DisplayRestaurantTable /></ProtectedRoute>} />
-                <Route path="/CreateRestaurant"        element={<ProtectedRoute><CreateRestaurant /></ProtectedRoute>} />
-                <Route path="/EditRestaurant/:id"       element={<ProtectedRoute><EditRestaurant /></ProtectedRoute>} />
-                <Route path="/ViewRestaurant/:id"       element={<ProtectedRoute><ViewRestaurant /></ProtectedRoute>} />
+                <Route path="/Restaurant"           element={<ProtectedRoute><DisplayRestaurantTable /></ProtectedRoute>} />
+                <Route path="/CreateRestaurant"     element={<ProtectedRoute><CreateRestaurant /></ProtectedRoute>} />
+                <Route path="/EditRestaurant/:id"   element={<ProtectedRoute><EditRestaurant /></ProtectedRoute>} />
+                <Route path="/ViewRestaurant/:id"   element={<ProtectedRoute><ViewRestaurant /></ProtectedRoute>} />
 
-                <Route path="/OrderHistory"            element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
-                <Route path="/ViewOrder/:id"       element={<ProtectedRoute><ViewOrder /></ProtectedRoute>} />
+                <Route path="/OrderHistory"         element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
+                <Route path="/ViewOrder/:id"        element={<ProtectedRoute><ViewOrder /></ProtectedRoute>} />
 
-                <Route path="/Users"            element={<ProtectedRoute><Users /></ProtectedRoute>} />
-                <Route path="/ViewUser/:id"       element={<ProtectedRoute><ViewUser /></ProtectedRoute>} />
+                <Route path="/Users"                element={<ProtectedRoute><Users /></ProtectedRoute>} />
+                <Route path="/ViewUser/:id"         element={<ProtectedRoute><ViewUser /></ProtectedRoute>} />
 
-                <Route path="/"                 element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-                <Route path="/login"            element={<Login />} />
-                <Route path="/register"         element={<Register />} />
+                <Route path="/Poll"                 element={<ProtectedRoute><Poll /></ProtectedRoute>} />
+
+                <Route path="/"                     element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+                <Route path="/Login"                element={<Login />} />
+                <Route path="/Register"             element={<Register />} />
 
             </Routes>
         </BrowserRouter>

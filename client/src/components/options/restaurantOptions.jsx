@@ -1,7 +1,7 @@
 import React from 'react'
 import "../../styles/tables.css"
 import axios from 'axios';
-import { faTrash, faEdit, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faEye, faCheckToSlot } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { Tooltip } from 'react-tooltip'
@@ -15,6 +15,19 @@ const Options = ({ id }) => {
             await axios.delete(
                 `${url_prefix}/api/restaurants/delete/${id}`,
                 { withCredentials: false })
+            window.location.reload();
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    const createPoll = async () => {
+        try {
+            await axios.post(
+                `${url_prefix}/api/poll/create`,
+                { restoId: id, pollStart: "2024-11-07 00:00:00" },
+                { headers: { "Content-Type": "application/json" } })
             window.location.reload();
         }
         catch (err) {
@@ -42,6 +55,11 @@ const Options = ({ id }) => {
                 <FontAwesomeIcon className="tableOptions" icon={faTrash} onClick={trashClick} />
             </span>
             <Tooltip id="delete-restaurant-helper"></Tooltip>
+
+            <span data-tooltip-id="poll-restaurant-helper" data-tooltip-content="Create Poll">
+                <FontAwesomeIcon className="tableOptions" icon={faCheckToSlot} onClick={createPoll} />
+            </span>
+            <Tooltip id="poll-restaurant-helper"></Tooltip>
         </div>
     )
 }

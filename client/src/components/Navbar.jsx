@@ -32,6 +32,9 @@ const Navbar = () => {
             </label>
             <nav className='navbar'>
                 <ul>
+                    <Link to="/Poll">
+                        <li><p>Poll</p></li>
+                    </Link>
                     <Link to="/Category">
                         <li><p>Category</p></li>
                     </Link>
@@ -57,10 +60,10 @@ const Navbar = () => {
                         ) :
                         (
                             <>
-                                <Link to="/register">
+                                <Link to="/Register">
                                     <li><p>Register</p></li>
                                 </Link>
-                                <Link to="/login">
+                                <Link to="/Login">
                                     <li><p>Login</p></li>
                                 </Link>
                             </>

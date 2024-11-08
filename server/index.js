@@ -9,6 +9,7 @@ import sequelize from "./config/conn.js";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import http from "http";
+import axios from "axios";
 import {Server} from "socket.io";
 
 
@@ -36,24 +37,31 @@ const io = new Server(server, {
     }
 });
 
-const frameworks = {
-    "0": { votes: 0, label: "Django" },
-    "1": { votes: 0, label: "Express.js" },
-    "2": { votes: 0, label: "Spring Boot" },
-    "3": { votes: 0, label: "Laravel" },
-    "4": { votes: 0, label: "Flask" }
+const url = `http://${process.env.DB_HOST}:${process.env.APP_PORT}`;
+const fetchOptions = async () => {
+    try {
+        const response = await axios.get(`${url}/api/poll/init`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching frameworks:', error);
+        return [];
+    }
 };
 
-io.on("connection", (socket) => {
-    console.log("User", socket.id)
-
-    io.emit("update", frameworks);
-
+io.on("connection", async (socket) => {
+    const options = await fetchOptions();
+    io.emit("update", options);
     socket.on("vote", (index) => {
-        if (frameworks[index]) {
-            frameworks[index].votes += 1;
+        if (options[index]) {
+            options[index].votes += 1;
         }
-        io.emit("update", frameworks);
+        io.emit("update", options);
+    });
+    socket.on("unvote", (index) => {
+        if (options[index]) {
+            options[index].votes -= 1;
+        }
+        io.emit("update", options);
     });
 });
 

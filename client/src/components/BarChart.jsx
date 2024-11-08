@@ -1,18 +1,32 @@
-import * as React from 'react';
-import {
-    BarChart
-} from '@mui/x-charts/BarChart';
+import React, {useEffect, useState} from "react"
+import { BarChart } from '@mui/x-charts/BarChart';
+import axios from "axios";
 
-export default function Bar({ socket }) {
-    const [DT, setData] = React.useState([]);
+export default function Bar({ socket, restaurantId }) {
+    const [DT, setData] = useState([]);
+    const [menu, setMenu]  = useState([]);
+    const [loaded, setLoadStatus]  = useState(false);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
 
-    React.useEffect(() => {
-        socket.on('update', (frameworks) => {
+    useEffect(() => {
+        async function getMenuOptions(){
+            axios.get(`${url_prefix}/api/menu/list/${restaurantId}`).then((response) => {
+                if (response.data.length>0)
+                    setMenu(response.data);
+                setLoadStatus(true);
+            }).catch((err) => { //error state
+                console.log("ERROR FROM GET API: ")
+                console.log(err);
+            });
+        }
 
+        if (!loaded) getMenuOptions().then(() => console.log("Menu Options Loaded"))
+
+        socket.on('update', (options) => {
             const newData = []
-            for (const key in frameworks) {
-                if (frameworks.hasOwnProperty(key)) {
-                    const { votes, label } = frameworks[key];
+            for (const key in options) {
+                if (options.hasOwnProperty(key)) {
+                    const { votes, label } = options[key];
                     newData.push(votes)
 
                 }
@@ -20,29 +34,26 @@ export default function Bar({ socket }) {
             setData(newData)
         })
 
-    }, [])
+    }, []);
 
-    const updateVote = (id) => {
-        socket.emit('vote', id)
-    }
+    const castVote      = (id) => { socket.emit('vote', id) }
+    const withdrawVote  = (id) => { socket.emit('unvote', id) }
 
     return (
         <>
-            <h4>Most Popular Backend Frameworks 2024</h4>
             <div className='bar'>
                 <BarChart
-                    width={800}
-                    height={350}
+                    width={1200}
+                    height={500}
                     series={[
                         {
                             data: DT.length > 0 ?
-                                DT : [0, 0, 0, 0, 0],
+                                DT : menu.map((element) => 0),
                             id: 'uvId', label: 'Votes'
                         },
                     ]}
                     xAxis={[{
-                        data: ["Django", "Express.js",
-                            "Spring Boot", "Laravel", "Flask"],
+                        data: menu.map((element) => `${element.name}`),
                         scaleType: 'band'
                     }]}
                 />
@@ -50,21 +61,21 @@ export default function Bar({ socket }) {
 
             <h3><u>What do you want to order?</u></h3>
             <div className='votingOpt'>
-                <button className='myButton' onClick={() => updateVote(0)}>
-                    Django
-                </button>
-                <button className='myButton' onClick={() => updateVote(1)}>
-                    Express.js
-                </button>
-                <button className='myButton' onClick={() => updateVote(2)}>
-                    Spring Boot
-                </button>
-                <button className='myButton' onClick={() => updateVote(3)}>
-                    Laravel
-                </button>
-                <button className='myButton' onClick={() => updateVote(4)}>
-                    Flask
-                </button>
+                {
+                    menu.map(function(element){
+                        return (
+                            <div>
+                                <button className='voteButton' key={element.id} onClick={() => castVote(element.id)}>
+                                    Vote
+                                </button>
+                                <button className='unvoteButton' key={element.id} onClick={() => withdrawVote(element.id)}>
+                                    Unvote
+                                </button>
+                                <h4>{element.name} [{element.category_name}]</h4>
+                            </div>
+                        )
+                    })
+                }
             </div>
         </>
     );

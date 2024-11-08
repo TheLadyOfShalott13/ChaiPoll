@@ -1,6 +1,8 @@
 import Poll from "../models/Poll.js";
+import Menu from "../models/Menu.js";
 import Restaurant from "../models/Restaurant.js";
 import {literal, Op} from "sequelize";
+import Category from "../models/Category.js";
 
 export const createPoll = async (req, res, next) => {
     const newPoll = new Poll(req.body)
@@ -58,10 +60,45 @@ export const getRunningPoll = async (req, res, next) => {
     try {
         const poll = await Poll.findAll({
             where: { pollEnd: { [Op.is]: null } },
+            include: [ { model: Restaurant, attributes: ['name','address'] }],
             order: [ ['id', 'DESC'] ],
             limit: 1
         });
-        res.status(200).json(poll);
+
+        const runningPoll = poll.map(ele => ({
+            ...ele.get({ plain: true }), // Spread all properties of the original object
+            restaurant_name: ele.Restaurant.name,
+            restaurant_address: ele.Restaurant.address
+        }));
+
+        res.status(200).json(runningPoll);
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const getInitialPollData = async (req, res, next) => {
+
+    try {
+        const currentPoll = await Poll.findAll({
+            where: { pollEnd: { [Op.is]: null } },
+            order: [ ['id', 'DESC'] ],
+            limit: 1
+        });
+
+        let modifiedMenu = {};
+
+        if (currentPoll.length > 0) {
+            const menu = await Menu.findAll({
+                where: { restaurant: currentPoll[0].id },
+            });
+
+            menu.map(function (ele) {
+                modifiedMenu[ele.id] = {votes: 0, label: ele.name};
+            })
+        }
+
+        res.status(200).json(modifiedMenu);
     } catch (err) {
         next(err)
     }

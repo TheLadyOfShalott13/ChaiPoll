@@ -6,16 +6,16 @@ import axios from "axios";
 
 const DisplayOrderHistoryTable = ({ type }) => {
 
-    const thead = ['id','order_date','order_time','restaurant','status','options'];
+    const thead = ['id','order_datetime','restaurant_name','restaurant_address','status','options'];
     const options_name = 'order';
     const [tbody,setTbody] = useState([]);
     const [dataLoad,setdataLoad] = useState(true);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
 
     useEffect(() => {
         async function loadData(){
-            axios.get(`http://localhost:7700/api/order/list`).then((response) => {
-                console.log("DISPLAY RESPONSE:");
-                console.log(response.data);
+            axios.get(`${url_prefix}/api/order/list`).then((response) => {
+                setTbody(response.data);
                 setdataLoad(false);
             }).catch((err) => { //error state
                 console.log("ERROR FROM GET API: ")
@@ -24,16 +24,16 @@ const DisplayOrderHistoryTable = ({ type }) => {
         }
 
         if (dataLoad)
-            loadData();
+            loadData().then();
 
-    }, []);
+    }, [tbody, dataLoad]);
 
     return (
         <div>
             <Navbar />
             <div className="table-container">
                 <div className="title-and-options">
-                    <h1>View Pending Order History</h1>
+                    <h1>View Order History</h1>
                 </div>
                 <MainTable tbody={{tbody}} thead={{thead}} options={{options_name}}/>
             </div>

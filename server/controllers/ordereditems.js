@@ -11,9 +11,8 @@ export const getAllOrderedItems = async (req, res) => {
 };
 
 export const createOrderItems = async (req, res, next) => {
-    const orderedItems = new OrderedItems(req.body)
     try {
-        const savedorderedItems = await orderedItems.save();
+        const savedorderedItems = await OrderedItems.bulkCreate(req.body, { validate: true });
         res.status(200).json(savedorderedItems);
     }
     catch (err) {

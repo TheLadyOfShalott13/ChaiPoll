@@ -2,7 +2,6 @@ import Poll from "../models/Poll.js";
 import Menu from "../models/Menu.js";
 import Restaurant from "../models/Restaurant.js";
 import {literal, Op} from "sequelize";
-import Category from "../models/Category.js";
 
 export const createPoll = async (req, res, next) => {
     const newPoll = new Poll(req.body)
@@ -90,11 +89,11 @@ export const getInitialPollData = async (req, res, next) => {
 
         if (currentPoll.length > 0) {
             const menu = await Menu.findAll({
-                where: { restaurant: currentPoll[0].id },
+                where: { restaurant: currentPoll[0].restoId },
             });
 
             menu.map(function (ele) {
-                modifiedMenu[ele.id] = {votes: 0, label: ele.name};
+                modifiedMenu[ele.id] = {voters: [], label: ele.name};
             })
         }
 

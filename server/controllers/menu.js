@@ -50,8 +50,18 @@ export const getOneMenu = async (req, res, next) => {
     const menuId = req.params.id;
 
     try {
-        const menu = await Menu.findAll({ where: { id: menuId } });
-        res.status(200).json(menu);
+        const menu = await Menu.findAll({
+            where: { id: menuId },
+            include: [
+                { model: Category, attributes: ['name'] },
+            ]
+        });
+        const modifiedMenu = menu.map(ele => ({
+            ...ele.get({ plain: true }), // Spread all properties of the original object
+            category_name: ele.Category.name
+        }));
+
+        res.status(200).json(modifiedMenu);
     } catch (err) {
         next(err)
     }

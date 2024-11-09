@@ -12,7 +12,6 @@ import CreateCategory from "./pages/category/CreateCategory";
 import ViewCategory from "./pages/category/ViewCategory";
 import EditCategory from "./pages/category/EditCategory";
 
-import DisplayMenuTable from "./pages/menu/Menu";
 import CreateMenu from "./pages/menu/CreateMenu";
 import ViewMenu from "./pages/menu/ViewMenu";
 import EditMenu from "./pages/menu/EditMenu";
@@ -49,9 +48,8 @@ function App() {
                 <Route path="/CreateCategory"       element={<ProtectedRoute><CreateCategory /></ProtectedRoute>} />
                 <Route path="/EditCategory/:id"     element={<ProtectedRoute><EditCategory /></ProtectedRoute>} />
                 <Route path="/ViewCategory/:id"     element={<ProtectedRoute><ViewCategory /></ProtectedRoute>} />
-                
-                <Route path="/Menu"                 element={<ProtectedRoute><DisplayMenuTable /></ProtectedRoute>} />
-                <Route path="/CreateMenu"           element={<ProtectedRoute><CreateMenu /></ProtectedRoute>} />
+
+                <Route path="/CreateMenu/:id"       element={<ProtectedRoute><CreateMenu /></ProtectedRoute>} />
                 <Route path="/EditMenu/:id"         element={<ProtectedRoute><EditMenu /></ProtectedRoute>} />
                 <Route path="/ViewMenu/:id"         element={<ProtectedRoute><ViewMenu /></ProtectedRoute>} />
 

@@ -1,45 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from '../../components/Navbar'
-import VerticalTable from '../../components/VerticalTable'
 import "../../styles/tables.css"
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {Button} from "react-bootstrap";
+import MainTable from "../../components/MainTable.jsx";
 
 const ViewMenu = ({params}) => {
 
     const {id} = useParams();
-    const attributes = ['id','name','price','category','options'];
+    const thead = ['id','name','price','category_name','restaurant_name','restaurant_address','options'];
     const [responseRecieved, setResponseStatus] = useState(false);
-    const [data, setData] = useState([]);
-    const option_name = 'menu';
+    const [tbody, setTbody] = useState([]);
+    const options_name = 'menu';
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
 
     useEffect(() => {
         const loadData = async () => {
-            // Till the data is fetch using API
-            // the Loading page will show.
             setResponseStatus(false);
-
-            // Await make wait until that
-            // promise settles and return its result
-            axios.get(`http://localhost:3000/menu/get/${id}`).then((response) => {
-                setData(response.data);
+            axios.get(`${url_prefix}/api/menu/list/${id}`).then((response) => {
+                setTbody(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
-                setResponseStatus(true);		//error state
+                setResponseStatus(true);
             });
             console.log('Completed');
         };
 
-        // Call the function
-        loadData();
+        if (!responseRecieved) loadData().then();
     }, []);
 
     return (
-        <div className="table-container">
+        <div>
             <Navbar />
-            <h1>View A Menu</h1>
-            {	responseRecieved ? data.length>0 ? <img className="viewImage" src={`http://localhost:7700/uploads/${data[0].imgName}`} alt={data[0].imgName} ></img> : <h1 className="feedback-header">Cannot Find Image</h1> : <h1 className="feedback-header">Loading Image</h1> }
-            {	responseRecieved ? data.length>0 ? <VerticalTable attributes={attributes} data={data} option={option_name} /> : <h1 className="feedback-header">Cannot Find Item</h1> : <h1 className="feedback-header">Loading Table</h1> }
+            <div className="table-container">
+                <div className="title-and-options">
+                    <h1>View All Menu Items</h1>
+                    <Button className="add-new">
+                        <Link to="/CreateMenu">Add New Menu</Link>
+                    </Button>
+                </div>
+                <MainTable tbody={{tbody}} thead={{thead}} options={{options_name}}/>
+            </div>
         </div>
     )
 }

@@ -1,17 +1,19 @@
 import React from 'react'
 import "../../styles/tables.css"
 import axios from 'axios';
-import { faTrash, faEdit, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+
     const trashClick = async () => {
         try {
             await axios.delete(
-                `http://localhost:7700/api/menu/delete/${id}`,
+                `${url_prefix}/api/menu/delete/${id}`,
                 { withCredentials: false })
             window.location.reload();
         }
@@ -22,13 +24,6 @@ const Options = ({ id }) => {
 
     return (
         <div>
-            <Link to={`/ViewMenu/${id}`} >
-                <span data-tooltip-id="view-menu-helper" data-tooltip-content="View Menu">
-                    <FontAwesomeIcon className="tableOptions" icon={faEye} />
-                </span>
-                <Tooltip id="view-menu-helper"></Tooltip>
-            </Link>
-
             <Link to={`/EditMenu/${id}`} >
                 <span data-tooltip-id="edit-menu-helper" data-tooltip-content="Edit Menu">
                     <FontAwesomeIcon className="tableOptions" icon={faEdit} />

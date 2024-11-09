@@ -3,34 +3,49 @@ import Navbar from '../../components/Navbar'
 import axios from "axios";
 import "../../styles/forms.css"
 import { useParams } from "react-router-dom";
+import Select from "react-select";
 
 const EditMenu = ( {params} ) => {
 
     const {id} = useParams();
     const [info, setInfo] = useState({});
-    const [file, setFile] = useState(null);
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
+    const [categoryOptions, setCategory] = useState([]);
+    const [categoryOptionsLoaded, setCategoryOptions] = useState(false);
+    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+
 
     useEffect(() => {
         const loadData = async () => {
-            // Till the data is fetch using API
-            // the Loading page will show.
             setResponseStatus(false);
-
-            // Await make wait until that
-            // promise settles and return its result
-            axios.get(`http://localhost:3000/menu/get/${id}`).then((response) => {
+            axios.get(`${url_prefix}/api/menu/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
                 setResponseStatus(true);		//error state
             });
-            console.log('Completed');
         };
 
-        // Call the function
-        loadData();
+        if (!responseRecieved) loadData().then();
+
+        async function getCategoryOptions() {
+            axios.get(`${url_prefix}/api/category/list`).then((response) => {
+                if (response.data.length > 0) {
+                    response.data.map(function (c, i) {
+                        categoryOptions[i] = {value: c.id, label: c.name}
+                    });
+                    setCategoryOptions(true);
+                }
+            }).catch((err) => { //error state
+                console.log("ERROR FROM CATEGORY LIST API: ")
+                console.log(err);
+            });
+        }
+
+        if (!categoryOptionsLoaded) getCategoryOptions().then();
+
     }, []);
 
     const handleChange = (e) => {
@@ -43,21 +58,11 @@ const EditMenu = ( {params} ) => {
 
     const handleClick = async(e) => {
         e.preventDefault();
-        const Fdata = new FormData();
-        Object.keys(info).forEach((key)=> {
-            Fdata.append(key,info[key]);
-            //console.log('DATA VALUE OF '+ key + ': ' + data.get(key))
-        });
-        if (file){
-            Fdata.append("img",file);
-            Fdata.append("imgName",file.name);
-        }
         try {
-            await fetch(`http://localhost:7700/api/menu/update/${id}`, {
-                method: "PUT",
-                body: Fdata,
-            });
-            window.location.assign('http://localhost:3000/Menu');
+            await axios.put(`${url_prefix}/api/menu/update/${id}`,
+                info, { headers: { "Content-Type": "application/json" }
+                });
+            window.location.assign(`${url_redirect_prefix}/ViewMenu/${id}`);
         } catch (err) {
             console.log(err);
         }
@@ -97,23 +102,22 @@ const EditMenu = ( {params} ) => {
 
                                 <div className="input">
                                     <label htmlFor="category">Category</label>
-                                    <Select onChange={handleChange}/>
+                                    <Select
+                                        options={categoryOptions}
+                                        onChange={(e) => info["category"] = e.value}
+                                        id="category"
+                                        defaultValue={{ "value": data[0].category, "label": data[0].category_name}}
+                                    ></Select>
                                 </div>
 
                                 <div className="input">
-                                    <label htmlFor="restaurant">Restaurant</label>
-                                    <Select onChange={handleChange}/>
-                                </div>
-
-                                <div className="input">
-                                    <label htmlFor="img">Image</label>
+                                <label htmlFor="restaurant">Restaurant</label>
                                     <input
-                                        type="file"
-                                        accept=".png,.jpeg,.jpg"
-                                        onChange={(e) => setFile(e.target.files[0])}
-                                        id="img"
+                                        type="number"
+                                        id="restaurant"
+                                        value={id}
+                                        readOnly={true}
                                     />
-                                    <span className="imageName"><b>Current File:</b> {(data[0].imgName)?data[0].imgName:"No file selected"}</span>
                                 </div>
 
                                 <button className="button"

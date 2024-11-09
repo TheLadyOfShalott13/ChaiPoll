@@ -1,7 +1,7 @@
 import React from 'react'
 import "../../styles/tables.css"
 import axios from 'axios';
-import { faTrash, faEdit, faEye, faCheckToSlot } from '@fortawesome/free-solid-svg-icons'
+import {faTrash, faEdit, faEye, faCheckToSlot, faBellConcierge} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { Tooltip } from 'react-tooltip'
@@ -55,6 +55,13 @@ const Options = ({ id }) => {
                 <FontAwesomeIcon className="tableOptions" icon={faTrash} onClick={trashClick} />
             </span>
             <Tooltip id="delete-restaurant-helper"></Tooltip>
+
+            <Link to={`/ViewMenu/${id}`} >
+                <span data-tooltip-id="view-menu-helper" data-tooltip-content="View Menu">
+                    <FontAwesomeIcon className="tableOptions" icon={faBellConcierge} />
+                </span>
+                <Tooltip id="view-menu-helper"></Tooltip>
+            </Link>
 
             <span data-tooltip-id="poll-restaurant-helper" data-tooltip-content="Create Poll">
                 <FontAwesomeIcon className="tableOptions" icon={faCheckToSlot} onClick={createPoll} />

@@ -51,15 +51,15 @@ const fetchOptions = async () => {
 io.on("connection", async (socket) => {
     const options = await fetchOptions();
     io.emit("update", options);
-    socket.on("vote", (index) => {
-        if (options[index]) {
-            options[index].votes += 1;
+    socket.on("vote", (selectedItem, voter) => {
+        if (options[selectedItem] && !options[selectedItem].voters.includes(voter)) {
+            options[selectedItem].voters.push(voter);
         }
         io.emit("update", options);
     });
-    socket.on("unvote", (index) => {
-        if (options[index]) {
-            options[index].votes -= 1;
+    socket.on("unvote", (selectedItem, voter) => {
+        if (options[selectedItem]) {
+            options[selectedItem].voters = options[selectedItem].voters.filter(name => name !== voter);
         }
         io.emit("update", options);
     });

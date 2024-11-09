@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import '../styles/index.css';
 import Bar from "../components/BarChart.jsx"
 import { io } from 'socket.io-client'

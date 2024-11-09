@@ -1,19 +1,45 @@
 import Order from "../models/Order.js";
+import Restaurant from "../models/Restaurant.js";
+import User from "../models/User.js";
 
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.findAll({ where: { status: "all-paid-for" } });
-        res.status(200).json(orders);
+        const orders = await Order.findAll({
+            include: [ { model: Restaurant, attributes: ['name','address'] }]
+        });
+
+        const modifiedOrders = orders.map(ele => ({
+            ...ele.get({ plain: true }), // Spread all properties of the original object
+            restaurant_name: ele.Restaurant.name,
+            restaurant_address: ele.Restaurant.address
+        }));
+
+        res.status(200).json(modifiedOrders);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
 export const getOneOrder = async (req, res) => {
-    const orderId = req.params.orderId;
+    const orderId = req.params.id;
     try {
-        const order = await Order.findAll({ where: { id: orderId } });
-        res.status(200).json(order);
+        const order = await Order.findAll({
+            where: { id: orderId },
+            include: [
+                { model: Restaurant, attributes: ['name','address'] },
+                { model: User, attributes: ['name','department'] }
+            ]
+        });
+
+        const modifiedOrder = order.map(ele => ({
+            ...ele.get({ plain: true }), // Spread all properties of the original object
+            restaurant_name: ele.Restaurant.name,
+            restaurant_address: ele.Restaurant.address,
+            user_who_paid: ele.User.name,
+            user_dept: ele.User.department
+        }));
+
+        res.status(200).json(modifiedOrder);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

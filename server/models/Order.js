@@ -12,4 +12,7 @@ const Order = sequelize.define("Order",{
     status:         { type: DataTypes.ENUM,         allowNull: false,       values: ['pending', 'all-paid-up'], defaultValue: 'pending' }
 });
 
+Order.belongsTo(Restaurant, { foreignKey: 'restaurant' });
+Order.belongsTo(User, { foreignKey: 'paid_by' });
+
 export default Order;

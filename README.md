@@ -1,7 +1,7 @@
 # Chai Poll System
 
 ## Project Specifications
-This project is used to demonstrate an example of **MyERN stack (MySQL, Express.js + Vue.js, React.js, Node.js) CRUD application** displaying **real time updates using Web Sockets (sockets.io)**. The ORM used here is **sequelize**. The backend is hosted as a **microservice**, each CRUD action invokes an **API** to a service. Login authentication is done using **JWT**.
+This project is used to demonstrate an example of **MyERN stack (MySQL, Express.js + Vite.js, React.js, Node.js) CRUD application** displaying **real time updates using Web Sockets (sockets.io)**. The ORM used here is **sequelize**. The backend is hosted as a **microservice**, each CRUD action invokes an **API** to a service. Login authentication is done using **JWT**.
 
 ## Table of Contents 
 - [Basic Idea](#basic-idea) 

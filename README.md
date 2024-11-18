@@ -1,7 +1,7 @@
 # Chai Poll System
 
 ## Project Specifications
-This project is used to demonstrate an example of **MyERN stack (MySQL, Express.js + Vite.js, React.js, Node.js) CRUD application** displaying **real time updates using Web Sockets (sockets.io)**. The ORM used here is **sequelize**. The backend is hosted as a **microservice**, each CRUD action invokes an **API** to a service. Login authentication is done using **JWT**.
+This project is used to demonstrate an example of **MyERN stack (MySQL, Express.js, React.js + Vite.js, Node.js) CRUD application** displaying **real time updates using Web Sockets (sockets.io)**. The ORM used here is **sequelize**. The backend is hosted as a **microservice**, each CRUD action invokes an **API** to a service. Login authentication is done using **JWT**.
 
 ## Table of Contents 
 - [Basic Idea](#basic-idea) 
@@ -72,7 +72,8 @@ In order to run this project, we need to follow the below steps:
 - Data Visualization using MUI X-Chart components
 - Scheduled order placement automation using cron jobs
 - Dynamic data rendering and updates upon user interaction
-
+- Microservice based architecture using RESTful APIs
+- User Authentication using JWT based Authorization
 
 ## Use Cases
 - Register and login employees as users and participants of polls. Departments must be assigned to every user. 

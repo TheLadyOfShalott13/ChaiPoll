@@ -21,6 +21,7 @@ I wanted a solution which would automate the entire process including setting th
 ### Prerequisites
 The following must be installed and setup before proceeding with running this project:
 - MySQL Server
+- MySQL Workbench or DBBeaver or DataGrip (or any other MySQL GUI application to view/modify data)
 - Node Package Manager on the backend server
 - Nodemon via command line `npm install nodemon`
 

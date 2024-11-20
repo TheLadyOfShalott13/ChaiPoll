@@ -13,12 +13,12 @@ const ViewMenu = ({params}) => {
     const [responseRecieved, setResponseStatus] = useState(false);
     const [tbody, setTbody] = useState([]);
     const options_name = 'menu';
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
 
     useEffect(() => {
         const loadData = async () => {
             setResponseStatus(false);
-            axios.get(`${url_prefix}/api/menu/list/${id}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/menu/list/${id}`).then((response) => {
                 setTbody(response.data);
                 setResponseStatus(true);
             }).catch((err) => {

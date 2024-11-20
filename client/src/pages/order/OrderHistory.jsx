@@ -10,11 +10,11 @@ const DisplayOrderHistoryTable = ({ type }) => {
     const options_name = 'order';
     const [tbody,setTbody] = useState([]);
     const [dataLoad,setdataLoad] = useState(true);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         async function loadData(){
-            axios.get(`${url_prefix}/api/order/list`).then((response) => {
+            axios.get(`${api_url_prefix}/api/order/list`).then((response) => {
                 setTbody(response.data);
                 setdataLoad(false);
             }).catch((err) => { //error state

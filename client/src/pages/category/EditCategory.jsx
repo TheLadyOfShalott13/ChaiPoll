@@ -10,8 +10,8 @@ const EditCategory = ( {params} ) => {
     const [info, setInfo] = useState({});
     const [responseRecieved, setResponseStatus] = useState(false);
     const [data, setData] = useState([]);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
+    const url_redirect_prefix = import.meta.env.VITE_FRONTEND_URL;
 
     useEffect(() => {
         const loadData = async () => {
@@ -21,7 +21,7 @@ const EditCategory = ( {params} ) => {
 
             // Await make wait until that
             // promise settles and return its result
-            axios.get(`${url_prefix}/api/category/get/${id}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/category/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
@@ -47,7 +47,7 @@ const EditCategory = ( {params} ) => {
         e.preventDefault();
         try {
             axios.put(
-                    `${url_prefix}/api/category/update/${id}`,
+                    `${api_url_prefix}/api/category/update/${id}`,
                     info,
                     { headers: { "Content-Type": "application/json" } }
                 ).then((response) => {

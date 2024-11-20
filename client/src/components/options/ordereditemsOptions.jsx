@@ -7,12 +7,12 @@ import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
 
     const setPaid = async () => {
         try {
             await axios.put(
-                `${url_prefix}/api/ordereditems/update/${id}`,
+                `${api_url_prefix}/api/ordereditems/update/${id}`,
                 { "paid_on" : new Date().toISOString() },
                 { "headers": { "Content-Type": "application/json" } })
                 .then((response)=>{

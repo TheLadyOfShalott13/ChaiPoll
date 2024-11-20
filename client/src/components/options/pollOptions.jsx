@@ -7,12 +7,12 @@ import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
 
     const closePoll = async () => {
         try {
             await axios.put(
-                `${url_prefix}/api/poll/update/${id}`,
+                `${api_url_prefix}/api/poll/update/${id}`,
                 { "pollEnd" : new Date().toISOString() },
                 { "headers": { "Content-Type": "application/json" } })
                 .then((response)=>{

@@ -12,11 +12,11 @@ const DisplayRestaurantTable = ({ type }) => {
     const options_name = 'restaurant';
     const [tbody, setTbody]  = useState([]);
     const [loaded, setLoadStatus]  = useState(false);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
 
     useEffect(() => {
         async function load_data(){
-            axios.get(`${url_prefix}/api/restaurants/list`).then((response) => {
+            axios.get(`${api_url_prefix}/api/restaurants/list`).then((response) => {
                 setTbody(response.data);
                 setLoadStatus(true)
             }).catch((err) => { //error state

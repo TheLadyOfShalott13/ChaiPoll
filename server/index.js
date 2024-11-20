@@ -37,10 +37,10 @@ const io = new Server(server, {
     }
 });
 
-const url = `http://${process.env.DB_HOST}:${process.env.APP_PORT}`;
+const api_url = `${process.env.BACKEND_URL}`;
 const fetchOptions = async () => {
     try {
-        const response = await axios.get(`${url}/api/poll/init`);
+        const response = await axios.get(`${api_url}/api/poll/init`);
         return response.data;
     } catch (error) {
         console.error('Error fetching frameworks:', error);
@@ -82,7 +82,7 @@ app.use(cookieParser())
 app.use(express.json());
 app.use(helmet());
 app.use(cors({
-    origin: `http://localhost:${process.env.CORS_PORT}`,
+    origin: `${process.env.FRONTEND_URL}`,
     credentials: true
 }))
 app.use(morgan("common"));

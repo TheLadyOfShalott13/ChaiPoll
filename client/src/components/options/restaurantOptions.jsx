@@ -8,12 +8,12 @@ import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
 
     const trashClick = async () => {
         try {
             await axios.delete(
-                `${url_prefix}/api/restaurants/delete/${id}`,
+                `${api_url_prefix}/api/restaurants/delete/${id}`,
                 { withCredentials: false })
             window.location.reload();
         }
@@ -25,7 +25,7 @@ const Options = ({ id }) => {
     const createPoll = async () => {
         try {
             await axios.post(
-                `${url_prefix}/api/poll/create`,
+                `${api_url_prefix}/api/poll/create`,
                 { restoId: id, pollStart: "2024-11-07 00:00:00" },
                 { headers: { "Content-Type": "application/json" } })
             window.location.reload();

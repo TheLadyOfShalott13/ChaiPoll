@@ -7,8 +7,6 @@ import { Tooltip } from 'react-tooltip'
 
 const Options = ({ id }) => {
 
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-
     return (
         <div>
             <Link to={`/ViewUser/${id}`} >

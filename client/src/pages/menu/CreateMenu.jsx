@@ -11,13 +11,13 @@ const CreateMenu = () => {
     const [info, setInfo] = useState({"restaurant":id});
     const [categoryOptions, setCategory] = useState([]);
     const [categoryOptionsLoaded, setCategoryOptions] = useState(false);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
+    const url_redirect_prefix = import.meta.env.VITE_FRONTEND_URL
 
     useEffect(()=> {
 
         async function getCategoryOptions() {
-            axios.get(`${url_prefix}/api/category/list`).then((response) => {
+            axios.get(`${api_url_prefix}/api/category/list`).then((response) => {
                 if (response.data.length > 0) {
                     response.data.map(function (c, i) {
                         categoryOptions[i] = {value: c.id, label: c.name}
@@ -45,7 +45,7 @@ const CreateMenu = () => {
     const handleClick = async(e) => {
         e.preventDefault();
         try {
-            await axios.post(`${url_prefix}/api/menu/create`,
+            await axios.post(`${api_url_prefix}/api/menu/create`,
                 info, { headers: { "Content-Type": "application/json" }
             });
             window.location.assign(`${url_redirect_prefix}/ViewMenu/${id}`);

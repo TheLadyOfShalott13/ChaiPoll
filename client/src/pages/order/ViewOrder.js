@@ -21,13 +21,13 @@ const ViewOrder = ({params}) => {
     const [tbody, setTbody] = useState([]);
     const option_name = 'order';
     const options_name = 'ordereditems';
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         const loadOrder = async () => {
             setResponseStatus(false);
 
-            axios.get(`${url_prefix}/api/order/get/${id}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/order/get/${id}`).then((response) => {
                 setData(response.data);
                 if (response.data[0].paid_by === null)
                     setdisplayPaymentOptions(true);
@@ -41,7 +41,7 @@ const ViewOrder = ({params}) => {
         const loadItems = async (id) => {
             setitemsLoaded(false);
 
-            axios.get(`${url_prefix}/api/ordereditems/get/${id}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/ordereditems/get/${id}`).then((response) => {
                 setTbody(response.data);
                 setitemsLoaded(true);
             }).catch((err) => {
@@ -55,7 +55,7 @@ const ViewOrder = ({params}) => {
     const paidByCOD = async () => {
         try {
             await axios.put(
-                `${url_prefix}/api/order/update/${id}`,
+                `${api_url_prefix}/api/order/update/${id}`,
                 { "paid_by" : user.dataValues.id, "payment_method" : "cod" },
                 { "headers": { "Content-Type": "application/json" } })
             window.location.reload();
@@ -69,7 +69,7 @@ const ViewOrder = ({params}) => {
     const paidByCard = async () => {
         try {
             await axios.put(
-                `${url_prefix}/api/order/update/${id}`,
+                `${api_url_prefix}/api/order/update/${id}`,
                 { "paid_by" : user.dataValues.id, "payment_method" : "card" },
                 { "headers": { "Content-Type": "application/json" } })
             window.location.reload();

@@ -6,8 +6,8 @@ import axios from "axios";
 const CreateRestaurant = () => {
 
     const [info, setInfo] = useState({});
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
+    const url_redirect_prefix = import.meta.env.VITE_FRONTEND_URL
 
     const handleChange = (e) => {
         setInfo(
@@ -22,7 +22,7 @@ const CreateRestaurant = () => {
         e.preventDefault();
         try {
             axios.post(
-                `${url_prefix}/api/restaurants/create`,
+                `${api_url_prefix}/api/restaurants/create`,
                 info,
                 { headers: { "Content-Type": "application/json" } }
             ).then((response) => {

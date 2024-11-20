@@ -32,20 +32,21 @@ In order to run this project, we need to follow the below steps:
 1. Navigate to `/server` folder
 2. Create a `.env` file of the following format:
     ```
-   DB_HOST = "<DB_HOST>"
-   DB_USER = "<DB_USER>"
-   DB_PASSWORD = "<DB_PASSWORD>"
-   DB_NAME = "<DB_NAME>"
-   DB_PORT = <DB_PORT>
-   APP_PORT = <APP_PORT>
-   CORS_PORT = <CORS_PORT>
-   JWT = <JWT>
+   DB_HOST = <Database_Host>
+   DB_USER = <Database_User>
+   DB_PASSWORD = <Password_for_MySQL>
+   DB_NAME = <Database_Name>
+   DB_PORT = <Database_Port>
+   APP_PORT = <Backend_Port>
+   JWT = <JS_Web_Token_String>
+   FRONTEND_URL = <Frontend_URL>
+   BACKEND_URL = <Backend_URL>
    ```
    - `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT` are MySQL connection information.
    - `APP_PORT` refers to the backend port number.
-   - `CORS_PORT` refers to the frontend port number.
-   - Eg, if this is run on `localhost`, if the backend is run from `localhost:7700` and the frontend is run from `localhost:5173` then `APP_PORT` = 7700 and `CORS_PORT` = 5173.
    - `JWT` is the Javascript Web Token used for authentication and can be any kind of string generated.
+   - `FRONTEND_URL` is the URL including port number of the authorized frontend server (eg. `FRONTEND_URL` = http://localhost:5173)
+   - `BACKEND_URL` is the URL including port number of the authorized backend server (eg. `BACKEND_URL` = http://localhost:7700)
 3. (Only if running it for the first time) Run the command `npm install` to install all the dependencies given in the `package.json` file.
 4. Run the command `nodemon ./index.js`
 
@@ -54,16 +55,11 @@ In order to run this project, we need to follow the below steps:
 1. Navigate to `/client` folder
 2. Create a `.env` file of the following format:
     ```
-   REACT_APP_API_PORT = <BACKEND_PORT>
-   REACT_APP_HTTP_PORT = <FRONTEND_PORT>
-   REACT_APP_DB_HOST = <DB_HOST>
-   VITE_API_PORT = <BACKEND_PORT>
-   VITE_HTTP_PORT = <FRONTEND_PORT>
-   VITE_SERVER = <SERVER_HOST>
+   VITE_BACKEND_URL = <Backend_URL>
+   VITE_FRONTEND_URL = <Frontend_URL>
    ```
-   - `REACT_APP_API_PORT` and `VITE_API_PORT` share the same value, which is the backend port number.
-   - `REACT_APP_HTTP_PORT` and `VITE_HTTP_PORT` share the same value, which is the frontend port number.
-   - `VITE_SERVER` is the server address in Domain Name or IP address format. In this case, it would be `localhost`.
+   - `VITE_BACKEND_URL` is the URL including port number of the authorized backend server (eg. `BACKEND_URL` = http://localhost:7700)
+   - `VITE_FRONTEND_URL` is the URL including port number of the authorized frontend server (eg. `FRONTEND_URL` = http://localhost:5173)
 3. (Only if running it for the first time) Run the command `npm install` to install all the dependencies given in the `package.json` file.
 4. Run the command `npm run dev`
 

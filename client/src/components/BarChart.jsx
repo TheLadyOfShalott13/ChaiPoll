@@ -9,12 +9,12 @@ export default function Bar({ socket, restaurantId }) {
     const [DT, setData] = useState([]);
     const [menu, setMenu]  = useState([]);
     const [loaded, setLoadStatus]  = useState(false);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
+    const url_redirect_prefix = import.meta.env.VITE_FRONTEND_URL;
 
     useEffect(() => {
         async function getMenuOptions(){
-            axios.get(`${url_prefix}/api/menu/list/${restaurantId}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/menu/list/${restaurantId}`).then((response) => {
                 if (response.data.length>0)
                     setMenu(response.data);
                 setLoadStatus(true);
@@ -43,7 +43,7 @@ export default function Bar({ socket, restaurantId }) {
     async function createOrder(){
         let order_items = [];
         axios.post(
-            `${url_prefix}/api/order/create`,
+            `${api_url_prefix}/api/order/create`,
             { "restaurant" : restaurantId },
             { headers: { "Content-Type": "application/json" } }
         ).then((response) => {
@@ -67,7 +67,7 @@ export default function Bar({ socket, restaurantId }) {
 
     async function saveOrderItems(data){
         axios.post(
-            `${url_prefix}/api/ordereditems/create`,
+            `${api_url_prefix}/api/ordereditems/create`,
             data,
             { headers: { "Content-Type": "application/json" } }
         ).then((response) => {

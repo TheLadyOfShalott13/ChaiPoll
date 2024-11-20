@@ -13,14 +13,14 @@ const EditMenu = ( {params} ) => {
     const [data, setData] = useState([]);
     const [categoryOptions, setCategory] = useState([]);
     const [categoryOptionsLoaded, setCategoryOptions] = useState(false);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
-    const url_redirect_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_HTTP_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL
+    const url_redirect_prefix = import.meta.env.VITE_FRONTEND_URL
 
 
     useEffect(() => {
         const loadData = async () => {
             setResponseStatus(false);
-            axios.get(`${url_prefix}/api/menu/get/${id}`).then((response) => {
+            axios.get(`${api_url_prefix}/api/menu/get/${id}`).then((response) => {
                 setData(response.data);
                 setResponseStatus(true);
             }).catch((err) => {
@@ -31,7 +31,7 @@ const EditMenu = ( {params} ) => {
         if (!responseRecieved) loadData().then();
 
         async function getCategoryOptions() {
-            axios.get(`${url_prefix}/api/category/list`).then((response) => {
+            axios.get(`${api_url_prefix}/api/category/list`).then((response) => {
                 if (response.data.length > 0) {
                     response.data.map(function (c, i) {
                         categoryOptions[i] = {value: c.id, label: c.name}
@@ -59,7 +59,7 @@ const EditMenu = ( {params} ) => {
     const handleClick = async(e) => {
         e.preventDefault();
         try {
-            await axios.put(`${url_prefix}/api/menu/update/${id}`,
+            await axios.put(`${api_url_prefix}/api/menu/update/${id}`,
                 info, { headers: { "Content-Type": "application/json" }
                 });
             window.location.assign(`${url_redirect_prefix}/ViewMenu/${id}`);

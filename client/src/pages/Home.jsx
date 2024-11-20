@@ -10,11 +10,11 @@ function HomePage() {
     const [RestaurantData, setRestaurant]  = useState([]);
     const [pollStatus, setPollStatus]  = useState(false);
     const [RestaurantID, setRestaurantID]  = useState(0);
-    const url_prefix = `http://${import.meta.env.VITE_SERVER}:${import.meta.env.VITE_API_PORT}`;
+    const api_url_prefix = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
         async function checkRunningPoll(){
-            axios.get(`${url_prefix}/api/poll/current`).then((response) => {
+            axios.get(`${api_url_prefix}/api/poll/current`).then((response) => {
                 if (response.data.length>0) {
                     setRestaurantID(response.data[0].restoId);
                     setRestaurant(response.data[0]);
@@ -49,7 +49,7 @@ function HomePage() {
     }, []);
 
     const socket = useMemo(() =>
-        io(url_prefix),[url_prefix]) ;
+        io(api_url_prefix),[api_url_prefix]) ;
 
     if (RestaurantID > 0) {
         return (
